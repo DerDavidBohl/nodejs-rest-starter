@@ -30,11 +30,53 @@ paths:
         201:
           description: Created
       parameters:
-        - in: body
-          name: body
-          required: true
+        - $ref: '#/parameters/World'
+  /hello/{WorldId}:
+    get:
+      summary: Gets a specific World
+      description: Gets a specific World
+      parameters:
+        - $ref: '#/parameters/WorldId'
+      responses:
+        200:
           schema:
             $ref: '#/definitions/World'
+          description: Requested World
+        404:
+          description: World not found.
+
+    put:
+      description: Updates a World
+      responses:
+        200:
+          description: OK
+        404:
+          description: World not found.
+        400:
+          description: Body does not Match World Format
+      parameters:
+        - $ref: '#/parameters/World'
+        - $ref: '#/parameters/WorldId'
+    delete:
+      description: Deletes a World
+      parameters:
+        - $ref: '#/parameters/WorldId'
+      responses:
+        204:
+          description: Successful deleted
+parameters:
+  WorldId:
+    name: WorldId
+    in: path
+    required: true
+    type: string
+    description: Id of a specific World
+  World:
+    name: World
+    in: body
+    description: World
+    schema:
+      $ref: '#/definitions/World'
 definitions:
   World:
     type: object
